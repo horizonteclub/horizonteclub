@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Horizonte Club | Aventuras y Emprendimiento</title>
+  <style>
+    /* Reset y base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      padding-bottom: 60px; /* para footer */
+    }
+    a {
+      color: #e94e1b;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #b93a13;
+    }
+    header {
+      background: #1f2937;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+    header p {
+      font-size: 1.2rem;
+      font-weight: 300;
+    }
+    nav {
+      background: #374151;
+      display: flex;
+      justify-content: center;
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+    }
+    nav a {
+      margin: 0 15px;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 5px 0;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0;
+      height: 3px;
+      background: #e94e1b;
+      transition: width 0.3s ease;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    nav .login-btn {
+      margin-left: auto;
+      margin-right: 20px;
+      background: #e94e1b;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.3s ease;
+      text-decoration: none;
+    }
+    nav .login-btn:hover {
+      background: #b93a13;
+    }
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px 25px;
+      border-radius: 8px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    h2 {
+      color: #1f2937;
+      margin-bottom: 20px;
+      border-bottom: 3px solid #e94e1b;
+      padding-bottom: 5px;
+    }
+    ul {
+      margin-left: 20px;
+      list-style-type: disc;
+      color: #555;
+    }
+    ul li {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+    p {
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+    }
+    .btn {
+      display: inline-block;
+      background: #e94e1b;
+      color: white;
+      padding: 12px 28px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(233,78,27,0.4);
+      transition: background 0.3s ease;
+      cursor: pointer;
+      text-align: center;
+      margin-top: 15px;
+      border: none;
+    }
+    .btn:hover {
+      background: #b93a13;
+    }
+    footer {
+      background: #1f2937;
+      color: #bbb;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 0.9rem;
+      margin-top: 60px;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      left: 0;
+    }
+    /* Modal Login/Signup */
+    .modal-bg {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+      padding: 20px;
+    }
+    .modal-bg.active {
+      display: flex;
+    }
+    .modal {
+      background: white;
+      padding: 30px 25px;
+      border-radius: 10px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .modal h3 {
+      margin-bottom: 20px;
+      color: #1f2937;
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .modal form {
+      display: flex;
+      flex-direction: column;
+    }
+    .modal label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    .modal input {
+      padding: 10px 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    .modal input:focus {
+      outline: none;
+      border-color: #e94e1b;
+    }
+    .modal .btn-close {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #888;
+      transition: color 0.3s ease;
+    }
+    .modal .btn-close:hover {
+      color: #e94e1b;
+    }
+    .switch-auth {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #555;
+      cursor: pointer;
+    }
+    .switch-auth span {
+      color: #e94e1b;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    /* Responsive */
+    @media (max-width: 600px) {
+      nav {
+        flex-wrap: wrap;
+      }
+      nav a {
+        margin: 8px 12px;
+      }
+      main {
+        margin: 20px 10px;
+        padding: 20px 15px;
+      }
+      .modal {
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Horizonte Club</h1>
+  <p>Aventuras reales + Emprendimiento sin límites</p>
+</header>
+
+<nav>
+  <a href="#que-es">¿Qué es?</a>
+  <a href="#temporadas">Temporadas</a>
+  <a href="#actividades">Actividades</a>
+  <a href="#emprendimiento">Emprendimiento</a>
+  <a href="#comunidad">Comunidad</a>
+  <a href="#contacto">Contacto</a>
+  <a href="#" class="login-btn" id="btnLogin">Iniciar Sesión</a>
+</nav>
+
+<main>
+
+  <section id="que-es">
+    <h2>¿Qué es Horizonte Club?</h2>
+    <p><strong>Horizonte Club</strong> es una comunidad exclusiva para personas que quieren vivir la vida a tope, combinando grandes aventuras con formación real en negocios digitales.</p>
+    <p>No es un simple viaje, es un cambio de estilo de vida: trabajar desde cualquier lugar, crecer como emprendedor y disfrutar de experiencias únicas junto a gente auténtica.</p>
+    <ul>
+      <li>Viajes en temporadas de 21 días a destinos sorprendentes: Portugal, Marruecos y más.</li>
+      <li>Actividades de aventura como senderismo, rutas en motos, quads y todoterrenos.</li>
+      <li>Formación práctica y acompañamiento en negocios online reales, sin humo ni promesas falsas.</li>
+      <li>Red de contactos y oportunidades para emprender y colaborar.</li>
+    </ul>
+  </section>
+
+  <section id="temporadas">
+    <h2>Próximas Temporadas</h2>
+    <p><strong>Portugal</strong> – 21 días de viaje, aprendizaje y aventura.</p>
+    <p><strong>Marruecos</strong> – Próximamente, prepárate para vivir una experiencia intensa.</p>
+    <p>Cada temporada incluye alojamiento, actividades, formación y mucho más.</p>
+    <a href="#contacto" class="btn">Reserva tu plaza</a>
+  </section>
+
+  <section id="actividades">
+    <h2>Actividades Destacadas</h2>
+    <ul>
+      <li>Senderismo en rutas naturales espectaculares.</li>
+      <li>Excursiones en motos, quads y vehículos todoterreno.</li>
+      <li>Talleres y clases prácticas de negocios digitales y marketing.</li>
+      <li>Eventos de networking y creación de contactos reales.</li>
+      <li>Charlas motivacionales y sesiones de coaching personalizado.</li>
+      <li>Tiempo para desconectar, socializar y vivir al máximo.</li>
+    </ul>
+  </section>
+
+  <section id="emprendimiento">
+    <h2>Emprendimiento Real</h2>
+    <p>No solo es viajar, también es crecer y ganar:</p>
+    <ul>
+      <li>Formación práctica en negocios online sin vender humo.</li>
+      <li>Mentoría y soporte de expertos para lanzar y escalar tus proyectos.</li>
+      <li>Espacios para crear, trabajar y aprender mientras viajas.</li>
+      <li>Estrategias reales para vivir viajando y generando ingresos.</li>
+    </ul>
+  </section>
+
+  <section id="comunidad">
+    <h2>Una Comunidad para Crecer</h2>
+    <p>En Horizonte Club encontrarás:</p>
+    <ul>
+      <li>Personas auténticas que quieren vivir, aprender y emprender.</li>
+      <li>Un grupo que se apoya y crea sin dramas ni falsas promesas.</li>
+      <li>Oportunidades reales para conectar y colaborar.</li>
+      <li>Un estilo de vida donde la aventura y el trabajo se combinan.</li>
+    </ul>
+  </section>
+
+  <section id="contacto">
+    <h2>¿Quieres unirte?</h2>
+    <p>Si buscas una experiencia diferente para vivir, aprender y emprender mientras viajas, Horizonte Club es para ti.</p>
+    <p>Reserva tu plaza para la próxima temporada o cont
+
